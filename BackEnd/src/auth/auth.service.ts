@@ -41,7 +41,7 @@ async createUser(userDto: UserDto) : Promise<void>{
     });
     }
 
-async singIn(userDto: UserDto) : Promise<{accessToken: string}>{
+async singIn(userDto: UserDto) : Promise<{accessToken: string, username: string}>{
     const { username, password } = userDto;
 
     const foundUser =  await this.userRepository.findOne({where: {username: username}});
@@ -49,7 +49,7 @@ async singIn(userDto: UserDto) : Promise<{accessToken: string}>{
     {
         const payload: JwtPayload = {username};
         const accessToken: string = await this.jwtService.sign(payload);
-        return { accessToken };
+        return { accessToken, username };
     }
     else
     {

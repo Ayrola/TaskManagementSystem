@@ -14,6 +14,11 @@ export class AuthController {
 
     @Post('/signIn')
     async signIn(@Body()userDto: UserDto) : Promise<{accessToken: string}>{
+        await this.delay(5000);
         return await this.authService.singIn(userDto);
+    }
+
+    delay(ms: number) {
+        return new Promise( resolve => setTimeout(resolve, ms) );
     }
 }

@@ -11,9 +11,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { MenuComponent } from './menubar/menu/menu.component';
 import {ButtonModule} from 'primeng/button';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
-  declarations: [AppComponent, SignInComponent,MenuComponent],
+  declarations: 
+  [
+    AppComponent,
+    SignInComponent,
+    MenuComponent, 
+    LoadingSpinnerComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
