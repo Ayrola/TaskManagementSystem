@@ -6,16 +6,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeroModule } from './hero/hero.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UserLoginComponent } from './userLogin/user-login/user-login.component';
+import { PasswordModule } from 'primeng/password';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SignInComponent } from './authentication/sign-in/sign-in.component';
+import { MenuComponent } from './menubar/menu/menu.component';
+import {ButtonModule} from 'primeng/button';
 
 @NgModule({
-  declarations: [AppComponent, UserLoginComponent],
+  declarations: [AppComponent, SignInComponent,MenuComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     HeroModule,
     AppRoutingModule,
+    PasswordModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent],
