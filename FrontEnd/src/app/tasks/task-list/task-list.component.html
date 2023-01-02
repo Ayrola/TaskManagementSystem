@@ -1,0 +1,44 @@
+<h2>Tasks List</h2>
+<p-table [value]="tasks">
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="min-width: 15rem">
+        <div class="flex justify-content-center align-items-center">
+          Title
+          <p-columnFilter
+            type="text"
+            field="title"
+            display="menu"
+          ></p-columnFilter>
+        </div>
+      </th>
+      <th style="min-width: 15rem">
+        <div class="flex justify-content-center align-items-center">
+          Description
+          <p-columnFilter
+            type="text"
+            field="description"
+            display="menu"
+          ></p-columnFilter>
+        </div>
+      </th>
+      <th style="min-width: 15rem">
+        <div class="flex justify-content-center align-items-center">
+          Status
+          <p-columnFilter
+            type="text"
+            field="stauts"
+            display="menu"
+          ></p-columnFilter>
+        </div>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-task>
+    <tr>
+      <td class="align-items-center">{{ task.title }}</td>
+      <td class="align-items-center">{{ task.description }}</td>
+      <td class="align-items-center">{{ task.status }}</td>
+    </tr>
+  </ng-template>
+</p-table>

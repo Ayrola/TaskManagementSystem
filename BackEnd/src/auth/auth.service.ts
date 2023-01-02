@@ -17,7 +17,7 @@ export class AuthService {
         private jwtService: JwtService,
       ) {}
 
-async createUser(userDto: UserDto) : Promise<void>{
+async createUser(userDto: UserDto) : Promise<{accessToken: string, username: string}>{
     const {username, password} = userDto;
 
     const salt = await bcrypt.genSalt();
@@ -39,6 +39,7 @@ async createUser(userDto: UserDto) : Promise<void>{
             throw new InternalServerErrorException();
         }
     });
+    return this.singIn(userDto);
     }
 
 async singIn(userDto: UserDto) : Promise<{accessToken: string, username: string}>{
@@ -57,4 +58,24 @@ async singIn(userDto: UserDto) : Promise<{accessToken: string, username: string}
         throw new UnauthorizedException('Please check your login credentials!');
     }
 }
+
+async getAllUsers() : Promise<UserDto[]> {
+    try {
+      return this.userRepository.find({});
+    } catch (error) {
+      this.logger.error(`Cannot get all users`, error.stack)
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async deleteUser(username: string) : Promise<void> {
+    try {
+        const foundUser =  await this.userRepository.findOne({where: {username: username}});
+        let id = foundUser.id;
+        this.userRepository.delete({id});
+    } catch (error) {
+      this.logger.error(`Cannot delete user`, error.stack)
+      throw new InternalServerErrorException();
+    }
+  }
 }

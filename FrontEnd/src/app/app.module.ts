@@ -10,8 +10,10 @@ import { PasswordModule } from 'primeng/password';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { MenuComponent } from './menubar/menu/menu.component';
-import {ButtonModule} from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { TaskModule } from './tasks/task.module';
+import { UsersModule } from './users-list/users-module';
 
 @NgModule({
   declarations: 
@@ -26,6 +28,8 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
     BrowserAnimationsModule,
     HttpClientModule,
     HeroModule,
+    TaskModule,
+    UsersModule,
     AppRoutingModule,
     PasswordModule,
     ReactiveFormsModule,

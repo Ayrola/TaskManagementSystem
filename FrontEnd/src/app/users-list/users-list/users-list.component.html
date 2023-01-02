@@ -1,0 +1,43 @@
+<h2>Users List</h2>
+<p-table [value]="users">
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="min-width: 15rem">
+        <div class="flex justify-content-center align-items-center">
+          ID
+          <p-columnFilter
+            type="text"
+            field="id"
+            display="menu"
+          ></p-columnFilter>
+        </div>
+      </th>
+      <th style="min-width: 15rem">
+        <div class="flex justify-content-center align-items-center">
+          Username
+          <p-columnFilter
+            type="text"
+            field="username"
+            display="menu"
+          ></p-columnFilter>
+        </div>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-user>
+    <tr>
+      <td class="align-items-center">{{ user.id }}</td>
+      <td class="align-items-center">{{ user.username }}</td>
+      <td>
+        <button
+          class="p-button-danger"
+          pButton
+          type="button"
+          icon="pi pi-trash"
+          iconPos="left"
+          (click)="deleteUser(user.username)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

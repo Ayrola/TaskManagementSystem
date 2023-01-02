@@ -1,5 +1,7 @@
 import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ErrorService } from 'src/app/services/error-service';
 import { AuthService } from '../authService';
 
 @Component({
@@ -11,7 +13,10 @@ export class SignInComponent implements OnInit {
   isSignedUp = true;
   isLoading = false;
   error:string = null;
-  constructor(private authService: AuthService) { }
+  constructor(
+      private authService: AuthService,
+      private router: Router,
+      private errorService: ErrorService) { }
 
   ngOnInit(): void {
   }
@@ -20,6 +25,7 @@ export class SignInComponent implements OnInit {
   {
     this.isSignedUp = !this.isSignedUp;
   }
+
   async onSubmit(form: NgForm)
   {
     if(!form.valid)
@@ -37,12 +43,13 @@ export class SignInComponent implements OnInit {
           next: (resData) =>
           {
             console.log(resData);
+            localStorage.setItem('token', resData.accessToken);
             this.isLoading = false;
+            this.router.navigate(['/tasks'])
           },
-          error: (error)=>
+          error: (resData)=>
           {
-            console.log(error);
-            this.error = 'An error occured!';
+            this.error = this.errorService.handleSignInError();
             this.isLoading = false;
           }
         });
@@ -52,13 +59,13 @@ export class SignInComponent implements OnInit {
         {
           next: (resData) =>
           {
-            console.log(resData);
+            localStorage.setItem('token', resData.accessToken);
+            this.router.navigate(['/tasks'])
             this.isLoading = false;
           },
-          error: (error)=>
+          error: (resData)=>
           {
-            console.log(error);
-            this.error = 'An error occured!';
+            this.error = this.errorService.handleSignUpError(resData);
             this.isLoading = false;
           }
         });
