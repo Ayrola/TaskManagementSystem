@@ -32,6 +32,7 @@ async createUser(userDto: UserDto) : Promise<{accessToken: string, email: string
     await this.userRepository.save(user).catch(e =>{
         if(e.code = '23505')
         {
+            console.log("here" + e);
             this.logger.error(`${user.username} try creation of a user: Data: ${JSON.stringify(user)}`, e);
             throw new ConflictException('User already in use');
         }

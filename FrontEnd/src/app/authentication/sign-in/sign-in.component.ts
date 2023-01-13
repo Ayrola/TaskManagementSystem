@@ -2,7 +2,7 @@ import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ErrorService } from 'src/app/services/error-service';
-import { AuthService } from '../authService';
+import { AuthService } from '../../services/authService';
 
 @Component({
   selector: 'app-sign-in',
@@ -44,13 +44,14 @@ export class SignInComponent implements OnInit {
           {
             localStorage.setItem('token', resData.accessToken);
             const expiration = JSON.parse(window.atob(resData.accessToken.split('.')[1])).exp;
-            console.log(expiration);
+
+            console.log(new Date(expiration*1000));
             this.isLoading = false;
             this.router.navigate(['/tasks'])
           },
           error: (resData)=>
           {
-            this.error = this.errorService.handleSignInError();
+            this.error = resData;
             this.isLoading = false;
           }
         });
@@ -67,7 +68,7 @@ export class SignInComponent implements OnInit {
           },
           error: (resData)=>
           {
-            this.error = this.errorService.handleSignUpError(resData);
+            this.error = resData;
             this.isLoading = false;
           }
         });
