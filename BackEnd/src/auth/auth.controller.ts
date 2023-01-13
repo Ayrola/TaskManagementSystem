@@ -25,9 +25,9 @@ export class AuthController {
     }
 
     @Post('/signIn')
-    async signIn(@Body()userDto: UserDto) : Promise<{accessToken: string}>{
+    async signIn(@Body('username')username: string, @Body('password')password: string,) : Promise<{accessToken: string}>{
         await this.delay(1000);
-        return await this.authService.singIn(userDto);
+        return await this.authService.singIn(username, password);
     }
 
     delay(ms: number) {

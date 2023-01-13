@@ -1,25 +1,28 @@
 <div *ngIf="isLoading" class="centered">
     <app-loading-spinner></app-loading-spinner>
 </div>
-<div class="row">
+<div class="row centered">
     <div class="col-md-12">
         <div class="alert alert-danger d-inline-flex p-2" role="alert" *ngIf="error">
             <p>{{error}}</p>
         </div>
-        <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">       
+        <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">    
+            <div class="field" *ngIf="!isSignedUp">
+                <h5>Email</h5>
+                <input pinputtext="" type="email"
+                 class="p-inputtext p-component p-element ng-pristine ng-valid ng-touched"
+                 ngModel name="email" required>
+            </div>   
             <div class="field">
                 <h5>Username</h5>
                 <input pinputtext=""
                  class="p-inputtext p-component p-element ng-pristine ng-valid ng-touched"
                  ngModel name="username" required>
-                 <small class="block">Enter your username.</small>
             </div>
             <div>
                 <h5>Password</h5>
                 <input pinputtext="" class="p-inputtext p-component p-element ng-tns-c138-36 p-password-input" type="password"
                 ngModel name="password" required minlength="6">
-                <small _ngcontent-due-c141="" 
-                    id="username1-help" class="block">Enter your password.</small>
             </div>
             <div>
                 <button label="Log In"

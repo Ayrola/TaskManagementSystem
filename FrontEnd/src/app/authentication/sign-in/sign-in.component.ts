@@ -42,8 +42,9 @@ export class SignInComponent implements OnInit {
         {
           next: (resData) =>
           {
-            console.log(resData);
             localStorage.setItem('token', resData.accessToken);
+            const expiration = JSON.parse(window.atob(resData.accessToken.split('.')[1])).exp;
+            console.log(expiration);
             this.isLoading = false;
             this.router.navigate(['/tasks'])
           },
@@ -55,7 +56,8 @@ export class SignInComponent implements OnInit {
         });
     }
     else{
-      this.authService.signUp(username, password).subscribe(
+      const email = form.value.email;
+      this.authService.signUp(username, password, email).subscribe(
         {
           next: (resData) =>
           {

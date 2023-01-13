@@ -1,11 +1,16 @@
 import { User } from "../user.entity";
 
-import { IsString, Matches, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsString, Matches, MaxLength, MinLength } from "class-validator";
 import { Column, PrimaryGeneratedColumn } from "typeorm";
 
 export class UserDto{
     @PrimaryGeneratedColumn('uuid')
     id: string;
+
+    @Column()
+    @IsString()
+    @IsEmail()
+    email: string;
 
     @Column()
     @IsString()

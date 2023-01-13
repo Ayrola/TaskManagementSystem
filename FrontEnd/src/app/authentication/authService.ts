@@ -18,13 +18,14 @@ export class AuthService{
         )
     }
 
-    signUp(userName: string, password: string)
+    signUp(userName: string, password: string, email: string)
     {
         return this.httpClient.post<UserAuth>(
             'http://localhost:3000/auth/signUp',
             {
                 username: userName,
                 password: password,
+                email: email,
             }
         )
     }

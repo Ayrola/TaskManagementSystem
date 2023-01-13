@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { Strategy } from 'passport-jwt';
 import { DatabaseModule } from 'src/database/database.module';
 import { AuthController } from './auth.controller';
 import { authProviders } from './auth.providers';

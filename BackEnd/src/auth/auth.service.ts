@@ -17,13 +17,14 @@ export class AuthService {
         private jwtService: JwtService,
       ) {}
 
-async createUser(userDto: UserDto) : Promise<{accessToken: string, username: string}>{
-    const {username, password} = userDto;
+async createUser(userDto: UserDto) : Promise<{accessToken: string, email: string, username: string}>{
+    const {email, username, password} = userDto;
 
     const salt = await bcrypt.genSalt();
     const hashedPasword = await bcrypt.hash(password, salt);
 
     let user = await this.userRepository.create({
+        email,
         username,
         password: hashedPasword,
     });
@@ -39,18 +40,18 @@ async createUser(userDto: UserDto) : Promise<{accessToken: string, username: str
             throw new InternalServerErrorException();
         }
     });
-    return this.singIn(userDto);
+    return this.singIn(userDto.username, userDto.password);
     }
 
-async singIn(userDto: UserDto) : Promise<{accessToken: string, username: string}>{
-    const { username, password } = userDto;
+async singIn(username: string, password: string) : Promise<{accessToken: string, email:string, username: string}>{
 
     const foundUser =  await this.userRepository.findOne({where: {username: username}});
     if(foundUser && (await bcrypt.compare(password, foundUser.password)))
     {
+        const email = foundUser.email;
         const payload: JwtPayload = {username};
         const accessToken: string = await this.jwtService.sign(payload);
-        return { accessToken, username };
+        return { accessToken, email, username};
     }
     else
     {
