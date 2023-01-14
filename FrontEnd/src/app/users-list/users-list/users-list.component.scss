@@ -96,7 +96,19 @@
     }
   }
 
-  td {
-    text-align: center;
+ .centered-text-table-heading{
+  text-align: center;
+  font-size:xx-large;
+  color: rgba(14, 13, 12, 0.885);
+ }
+
+ .button-danger{
+  background-color: red;
+  margin-right: 15px;
+ }
+
+ .button-warning{
+  background-color: rgb(213, 221, 4);
+  margin-right: 15px;
  }
   

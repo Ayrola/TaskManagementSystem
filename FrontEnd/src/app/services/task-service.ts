@@ -1,21 +1,27 @@
+import { NgLocaleLocalization } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { exhaustMap, take, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { TasksModel } from '../tasks/tasksResponseData';
+import { AuthService } from './authService';
 
 @Injectable()
 export class TaskService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getAllTasks() {
-    return this.http.get(`${environment.backendUrl}/task`,{
+    let accessToken: string;
+    this.authService.user.pipe(
+      take(1)).subscribe(user =>{
+        accessToken = user.token;
+      })
+
+    console.log(accessToken);
+    return this.http.get<TasksModel[]>(`${environment.backendUrl}/task`,{
         headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${accessToken}`,
         }}
       ,);
   }
-
-//   createHero(task: Task)
-//   {
-//     return this.http.post(`${environment.backendUrl}/hero`, task);
-//   }
 }

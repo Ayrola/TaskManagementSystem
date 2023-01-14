@@ -1,4 +1,4 @@
-<h2>Users List</h2>
+<h2 class="centered-text-table-heading">Users List</h2>
 <p-table [value]="users">
   <ng-template pTemplate="header">
     <tr>
@@ -32,21 +32,40 @@
           ></p-columnFilter>
         </div>
       </th>
+      <th style="min-width: 15rem">
+        <div class="flex justify-content-center align-items-center">
+          Actions
+        </div>
+      </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-user>
     <tr>
-      <td class="align-items-center">{{ user.id }}</td>
-      <td class="align-items-center">{{ user.email }}</td>
-      <td class="align-items-center">{{ user.username }}</td>
-      <td>
+      <td style="text-align: center;">{{ user.id }}</td>
+      <td style="text-align: center;">{{ user.email }}</td>
+      <td style="text-align: center;">{{ user.username }}</td>
+      <td class="flex justify-content-center align-items-center">
         <button
-          class="p-button-danger"
+          class="button-warning"
+          pButton
+          type="button"
+          icon="pi pi-user-edit"
+          iconPos="left"
+        ></button>
+        <button
+          class="button-danger"
           pButton
           type="button"
           icon="pi pi-trash"
           iconPos="left"
           (click)="deleteUser(user.username)"
+        ></button>
+        <button
+        class="button-danger"
+          pButton
+          type="button"
+          icon="pi pi-ban"
+          iconPos="left"
         ></button>
       </td>
     </tr>

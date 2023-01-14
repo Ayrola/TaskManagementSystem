@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/services/task-service';
+import { TasksModel } from '../tasksResponseData';
 
 @Component({
   selector: 'app-task-list',
@@ -8,7 +9,7 @@ import { TaskService } from 'src/app/services/task-service';
 })
 export class TaskListComponent implements OnInit {
 
-  public tasks: any;
+  public tasks: TasksModel[];
   // public heroDialog: boolean = false;
   // public hero : Hero = {} as Hero;
 
@@ -21,8 +22,8 @@ export class TaskListComponent implements OnInit {
   loadTasks()
   {
     this.taskService.getAllTasks().subscribe({
-      next: (tasks: any) => {
-        let parsedTasks = tasks.map((t: any) => {
+      next: (tasks: TasksModel[]) => {
+        let parsedTasks = tasks.map((t: TasksModel) => {
           return { ...t}
         })
         this.tasks = parsedTasks;

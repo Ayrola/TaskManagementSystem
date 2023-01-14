@@ -33,5 +33,6 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
+    this.isAuthenticated = false;
   }
 }

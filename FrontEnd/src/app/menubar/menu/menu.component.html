@@ -7,10 +7,10 @@
 </a>
 <div class="navigation-links" id="navigationLinks">
   <ul>
-    <li><a routerLink="/tasks">Tasks</a></li>
-    <li><a routerLink="/users">Users</a></li>
-    <li><a routerLink="/signIn">Login</a></li>
-    <li><a routerLink="/">Logout</a></li>
+    <li><a routerLink="/tasks"*ngIf="isAuthenticated">Tasks</a></li>
+    <li><a routerLink="/users" *ngIf="isAuthenticated">Users</a></li>
+    <li><a routerLink="/signIn" *ngIf="!isAuthenticated">Login</a></li>
+    <li><a routerLink="/" *ngIf="isAuthenticated" (click)="ngOnDestroy()">Logout</a></li>
   </ul>
 </div>
 </nav>

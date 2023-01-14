@@ -96,7 +96,7 @@
     }
   }
 
-  td {
-    text-align: center;
+  td ::ngd-deep {
+    align-items: center;
  }
   
