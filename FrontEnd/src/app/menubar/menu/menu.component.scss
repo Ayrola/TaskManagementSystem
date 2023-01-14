@@ -1,0 +1,95 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
+.navigation{
+    display: flex;
+    //will push them as far from each other as possible
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    color: white;
+}
+
+.brand-title{
+    font-size: 1.5rem;
+    margin: .5rem;
+}
+
+.navigation-links ul{
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+}
+
+.navigation-links li{
+    list-style: none;
+}
+
+.navigation-links a{
+    text-decoration: none;
+    color: white;
+    padding: 1rem;
+    display: block;
+}
+
+.navigation-links li:hover{
+    background-color: #555;
+}
+
+.toggle-menu-button{
+    position: absolute;
+    top: .75rem;
+    right: 1rem;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+}
+
+.toggle-menu-button .toggle-bar{
+    height: 3px;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+}
+
+@media (max-width: 600px){
+
+    .toggle-menu-button{
+        display: flex;
+    }
+
+    .navigation-links{
+        display: none;
+        width: 100%;
+    }
+
+    .navigation{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navigation-links ul{
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .navigation-links li{
+        text-align: center;
+    }
+
+    .navigation-links a{
+        padding: .5rem 1rem;
+    }
+
+    .navigation-links.active{
+        display: flex;
+    }
+}

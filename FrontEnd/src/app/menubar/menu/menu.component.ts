@@ -10,19 +10,25 @@ import { AuthService } from 'src/app/services/authService';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit, OnDestroy {
+  navbarLinks = document.getElementsByClassName('navigation-links')[0];
   isAuthenticated: boolean = false;
   router: AppRoutingModule;
+
   private userSub: Subscription;
 
   constructor(private authService: AuthService) {
   }
-
   ngOnInit(): void {
     this.userSub = this.authService.user.subscribe(
       user =>
       {
         this.isAuthenticated = !!user;
       })
+  }
+
+  showMenuButtons(){
+    const navigationLinks = document.getElementById('navigationLinks');
+    navigationLinks.classList.toggle('active');
   }
 
   ngOnDestroy(): void {
