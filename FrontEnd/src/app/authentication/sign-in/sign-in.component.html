@@ -6,7 +6,7 @@
         <div class="alert alert-danger d-inline-flex p-2" role="alert" *ngIf="error">
             <p>{{error}}</p>
         </div>
-        <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">    
+        <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading" class="justify-content-center align-items-center" >    
             <div class="field" *ngIf="!isSignedUp">
                 <h5>Email</h5>
                 <input pinputtext="" type="email"

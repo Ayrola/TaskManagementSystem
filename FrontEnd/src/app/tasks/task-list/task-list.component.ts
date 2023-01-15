@@ -32,25 +32,15 @@ export class TaskListComponent implements OnInit {
     });
   }
 
-  // showDialog()
-  // {
-  //   this.heroDialog = true;
-  // }
-
-  // createHero()
-  // {
-  //   this.heroService.createHero(this.hero).subscribe({
-  //     next: (hero) =>
-  //     {
-  //       this.hero = {} as Hero;
-  //       this.heroDialog = false;
-  //       this.loadHeroes();
-  //     },
-  //     error: (err) =>
-  //     {
-  //       console.log(err);
-  //     },
-  //   });
-  //   this.heroDialog = false;
-  // }
+  deleteTask(id: string){
+    this.taskService.deleteTask(id).subscribe({
+      next: ()=> 
+      {
+        this.loadTasks();
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
+  }
 }

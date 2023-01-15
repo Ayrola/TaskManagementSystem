@@ -6,9 +6,12 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TaskListComponent } from './task-list/task-list.component';
 import { TaskService } from '../services/task-service';
+import { TaskEditFormComponent } from './task-edit-form/task-edit-form.component';
+import { TaskAddFormComponent } from './task-add-form/task-add-form.component';
+import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
-  declarations: [TaskListComponent],
+  declarations: [TaskListComponent, TaskEditFormComponent, TaskAddFormComponent],
   imports: [
     FormsModule,
     TableModule,
