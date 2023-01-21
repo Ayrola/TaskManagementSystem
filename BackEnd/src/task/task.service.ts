@@ -17,7 +17,9 @@ export class TaskService {
 
   getAllTasks(user: User) : Promise<Task[]> {
     try {
-      return this.taskRepository.find({where: {user}});
+      return this.taskRepository.find({relations: {
+        user: true
+      }});
     } catch (error) {
       this.logger.error(`${user.username} tryies to get all tasks.`, error.stack)
       throw new InternalServerErrorException();
@@ -55,7 +57,7 @@ export class TaskService {
   async getTaskById(id: string, user: User) : Promise<Task>
   {
       let createdTask = await this.taskRepository.findOne({
-      where: { id: id, user },
+      where: { id: id },
     });
 
     if(!createdTask)

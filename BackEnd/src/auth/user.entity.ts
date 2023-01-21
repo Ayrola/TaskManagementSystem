@@ -1,5 +1,6 @@
+import { Project } from "src/project/project.entity";
 import { Task } from "src/task/task.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User
@@ -18,4 +19,16 @@ export class User
 
     @ManyToOne(type => Task, task => task.user, {eager: true})    
     tasks: Task[]
+
+    @ManyToMany(type => Project, project => project.users, {eager: true})    
+    projects: Project[]
+
+    addUser(project: Project)
+    {
+        if(this.projects == null)
+        {
+            this.projects = new Array<Project>();
+        }
+        this.projects.push(project);
+    }
 }

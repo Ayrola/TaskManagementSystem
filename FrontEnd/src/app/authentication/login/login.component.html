@@ -1,28 +1,50 @@
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div class="container">
-    <div class="login-left">
-        <div class="login-header">
-            <h1>Welcome to the Task Management App</h1>
-            <p>Please Login to use the platform</p>
-        </div>
-        <form class="login-form">
-            <div class="login-form-content">
-                <div class="form-item">
-                    <label for="username">Enter username</label>
-                    <input type="text" id="username">
+        <div class="login-container">
+            <input id="item-1" type="radio" name="item" class="sign-in" checked><label for="item-1" class="item">Sign In</label>
+            <input id="item-2" type="radio" name="item" class="sign-up"><label for="item-2" class="item">Sign Up</label>
+            <div class="login-form">
+                <div class="sign-in-htm">
+                    <div class="group">
+                        <input placeholder="Username" id="user" type="text" class="input">
+                    </div>
+                    <div class="group">
+                        <input placeholder="Password" id="pass" type="password" class="input" data-type="password">
+                    </div>
+
+                    <div class="group">
+                        <input type="submit" class="button" value="Sign In">
+                    </div>
+                    <div class="hr"></div>
+                    <div class="footer">
+                        <a href="#forgot">Forgot Password?</a>
+                    </div>
                 </div>
-                <div class="form-item">
-                    <label for="password">Enter password</label>
-                    <input type="password" id="password">
-                </div>
-                <div class="form-item">
-                    <input type="checkbox" id="rememberMeCheckBox">
-                    <label for="rememberMeCheckBox" id="checkBoxLabel">Remember me</label>
-                </div>
-            </div>
-            <button type="submit">Sign in</button>
-        </form>
-    </div>
-    <div class="login-right">
-        <img width="150px" src="assets/loginPageImage.png">
-    </div>
-</div>
+                <div class="sign-up-htm">
+                    <div class="group">
+                        <input placeholder="Username" id="user" type="text" class="input">
+                    </div>
+
+                    <div class="group">
+                        <input placeholder="Email adress" id="pass" type="text" class="input">
+                    </div>
+
+                    <div class="group">
+                        <input placeholder="Password" id="pass" type="password" class="input" data-type="password">
+                    </div>
+                    <div class="group">
+                        <input placeholder="Repeat password" id="pass" type="password" class="input" data-type="password">
+                    </div>
+
+                    <div class="group">
+                        <input type="submit" class="button" value="Sign Up">
+                    </div>
+                    <div class="hr"></div>
+                    <div class="footer">
+                        <label for="item-1">Already have an account?</label>
+				</div>
+			</div>
+		</div>
+	</div>

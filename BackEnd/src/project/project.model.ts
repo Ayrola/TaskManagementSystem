@@ -1,16 +1,16 @@
 import { User } from "src/auth/user.entity";
-import { Project } from "src/project/project.entity";
+import { Task } from "src/task/task.entity";
 
-export interface Task{
+export interface Project{
     id: string;
     title: string;
     description: string;
-    status: TaskStatus;
-    user: User;
-    project: Project 
+    status: ProjectStatus;
+    users: User[]
+    tasks: Task[]
 }
 
-export enum TaskStatus{
+export enum ProjectStatus{
     OPEN = 'OPEN',
     IN_PROGRESS = 'IN_PROGRESS',
     DONE = 'DONE',
