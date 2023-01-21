@@ -19,7 +19,8 @@ export class TaskService {
     try {
       return this.taskRepository.find({relations: {
         user: true
-      }});
+      },
+    where: {user}});
     } catch (error) {
       this.logger.error(`${user.username} tryies to get all tasks.`, error.stack)
       throw new InternalServerErrorException();
@@ -52,6 +53,23 @@ export class TaskService {
       throw new InternalServerErrorException();
     }
     
+  }
+
+  async assignTaskToProject(projectId: string, taskId: string, user: User) : Promise<Task>
+  {
+      let createdTask = await this.taskRepository.findOne({
+      where: { id: taskId },
+    });
+
+    createdTask.project.id = projectId;
+
+    if(!createdTask)
+    {
+      this.logger.error(`${user.username} try to get task by id: ${taskId}`);
+      throw new NotFoundException(`Task with ID: "${taskId}" not found`);
+    }
+      
+    return createdTask;
   }
 
   async getTaskById(id: string, user: User) : Promise<Task>

@@ -2,7 +2,7 @@ import { Exclude } from "class-transformer";
 import { userInfo } from "os";
 import { User } from "src/auth/user.entity";
 import { Project } from "src/project/project.entity";
-import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { TaskStatus } from "./task.model";
 
 @Entity()
@@ -24,5 +24,6 @@ export class Task{
     user: User;
 
     @ManyToOne(type => Project, project => project.tasks, {eager: false})
+    @JoinColumn({name: 'project_Id'})
     project: Project;
 }

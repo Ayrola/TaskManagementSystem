@@ -35,4 +35,10 @@ export class ProjectController {
   {
     return this.projectService.removeUserFromProject(id, user);
   }
+
+  @Post('/:id/:taskId')
+  putTaskIntoProject(@Param('id') id: string, @Param('taskId') taskId: string, @GetUser() user: User): Promise<Project>
+  {
+    return this.projectService.putTaskIntoProject(id, user, taskId);
+  }
 }

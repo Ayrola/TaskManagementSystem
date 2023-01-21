@@ -13,7 +13,9 @@ export class ProjectService {
   private logger = new Logger('ProjectService');
   constructor(
     @Inject('PROJECT_REPOSITORY')
-    private projectRepository: Repository<Project>
+    private projectRepository: Repository<Project>,
+    @Inject('TASK_REPOSITORY')
+    private taskRepository: Repository<Task>
   ) {}
 
   private projects: Project[] = [];
@@ -97,6 +99,22 @@ export class ProjectService {
     return await this.projectRepository.save(foundProject);
   }
 
+  async putTaskIntoProject(projectId: string, user: User, taskId: string) : Promise<Project> {
+    let foundProject = await this.getProjectById(projectId, user);
+    let task = await this.taskRepository.findOne({
+      where: { id: taskId },
+    });
+
+    if(foundProject){
+      if(this.checkIfTaskExistsInProject(foundProject, user.id, task.id) == false)
+      {
+        foundProject.tasks.push(task);
+      }
+    }
+
+    return await this.projectRepository.save(foundProject);
+  }
+
   async getProjectById(projectId: string, user: User) : Promise<Project> {
     try {
       let projects = await this.projectRepository.find({
@@ -134,16 +152,26 @@ export class ProjectService {
   }
 
   findUserIndexInUsersArray(project: Project, userId: string): number{
-    let isAssigned: boolean = false;
     let userIndex: number = 0;
     project.users.forEach(user => {
       if(user.id == userId)
       {
         return;
-        isAssigned = true;
       }
       userIndex++;
     });
     return userIndex;
+  }
+
+  checkIfTaskExistsInProject(project: Project, userId: string, taskId: string): boolean{
+    let isTaskexisting: boolean = false;
+
+    project.tasks.forEach(task => {
+      if(task.id == taskId)
+      {
+        isTaskexisting = true;
+      }
+    });
+    return isTaskexisting;
   }
 }
