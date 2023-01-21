@@ -25,8 +25,14 @@ export class ProjectController {
   }
 
   @Post('/:id')
-  updatetaskStatusById(@Param('id') id: string, @GetUser() user: User): Promise<Project>
+  assignUserToProject(@Param('id') id: string, @GetUser() user: User): Promise<Project>
   {
     return this.projectService.assignUserToProject(id, user);
+  }
+
+  @Post('/:id/remove')
+  removeUserFromProject(@Param('id') id: string, @GetUser() user: User): Promise<Project>
+  {
+    return this.projectService.removeUserFromProject(id, user);
   }
 }

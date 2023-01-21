@@ -22,13 +22,4 @@ export class User
 
     @ManyToMany(type => Project, project => project.users, {eager: true})    
     projects: Project[]
-
-    addUser(project: Project)
-    {
-        if(this.projects == null)
-        {
-            this.projects = new Array<Project>();
-        }
-        this.projects.push(project);
-    }
 }

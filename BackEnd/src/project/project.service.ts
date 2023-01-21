@@ -86,6 +86,17 @@ export class ProjectService {
     return await this.projectRepository.save(foundProject);
   }
 
+  async removeUserFromProject(projectId: string, user: User) : Promise<Project> {
+    let foundProject = await this.getProjectById(projectId, user);
+
+    if(foundProject){
+      let userIndexInArray = this.findUserIndexInUsersArray(foundProject, user.id);
+      foundProject.users.splice(userIndexInArray, 1);
+    }
+
+    return await this.projectRepository.save(foundProject);
+  }
+
   async getProjectById(projectId: string, user: User) : Promise<Project> {
     try {
       let projects = await this.projectRepository.find({
@@ -120,5 +131,19 @@ export class ProjectService {
       }
     });
     return isAssigned;
+  }
+
+  findUserIndexInUsersArray(project: Project, userId: string): number{
+    let isAssigned: boolean = false;
+    let userIndex: number = 0;
+    project.users.forEach(user => {
+      if(user.id == userId)
+      {
+        return;
+        isAssigned = true;
+      }
+      userIndex++;
+    });
+    return userIndex;
   }
 }
