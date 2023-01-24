@@ -28,6 +28,11 @@ export class ErrorService
             errorMessage = 'Follow the password requirements!';
             return throwError(() => new Error(errorMessage));
         }
+        if(errorRes.error.message == 'Please verify your account!')
+        {
+            errorMessage = 'Accout not verified, please check your email!';
+            return throwError(() => new Error(errorMessage));
+        }
         else if (errorRes.error.message[0] == 'password too week')
         {
             errorMessage = 'Follow the password requirements!';

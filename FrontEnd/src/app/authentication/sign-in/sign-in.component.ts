@@ -23,11 +23,14 @@ export class SignInComponent implements OnInit {
 
   switchBetweenLoginAndSignUp()
   {
+    this.error = null;
     this.isSignedUp = !this.isSignedUp;
   }
 
   async onSubmit(form: NgForm)
   {
+    this.error = null;
+
     if(!form.valid)
     {
       return;
@@ -45,9 +48,15 @@ export class SignInComponent implements OnInit {
             localStorage.setItem('token', resData.accessToken);
             const expiration = JSON.parse(window.atob(resData.accessToken.split('.')[1])).exp;
 
-            console.log(new Date(expiration*1000));
             this.isLoading = false;
-            this.router.navigate(['/tasks'])
+            if(resData.isActive == true)
+            {
+              this.router.navigate(['/tasks'])
+            }
+            else{
+              this.router.navigate(['/notActivatedUser'])
+            }
+            
           },
           error: (resData)=>
           {
@@ -62,8 +71,14 @@ export class SignInComponent implements OnInit {
         {
           next: (resData) =>
           {
-            localStorage.setItem('token', resData.accessToken);
-            this.router.navigate(['/tasks'])
+            console.log(resData);
+            if(resData.isActive == true)
+            {
+              this.router.navigate(['/tasks'])
+            }
+            else{
+              this.router.navigate(['/notActivatedUser'])
+            }
             this.isLoading = false;
           },
           error: (resData)=>

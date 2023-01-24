@@ -8,6 +8,12 @@ export class User
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
+    @PrimaryGeneratedColumn('uuid')
+    confirmationId: string;
+
+    @Column()
+    active: boolean = false;
+
     @Column({unique: true})
     email: string;
 

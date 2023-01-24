@@ -51,10 +51,4 @@ export class TaskController {
     const {status} = updateTaskStatusDto;
     return this.taskService.updateTaskStatusById(id, status, user);
   }
-
-  @Post('/:id/:projectId')
-  assignTaskToProject(@Param('id') id: string, @Param('projectId') projectId: string, @GetUser() user: User): Promise<Task>
-  {
-    return this.taskService.assignTaskToProject(projectId, id, user);
-  }
 }

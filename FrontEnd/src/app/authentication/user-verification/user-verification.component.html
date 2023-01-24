@@ -1,0 +1,22 @@
+<div class="centered">
+    <h2>Thanks for subscribing!</h2>
+    <h2>Please click the button to activate you account.</h2>
+    <button label="Activate"
+                 class="p-element p-ripple p-button-success p-button p-component button-with-margins" (click)="showDialog()">
+                 <span class="p-button-label">Activate</span>
+
+               
+               <p-dialog
+                 [(visible)]="dialogVisibility"
+                 header="User activated! Please login again!"
+                 [modal]="false"
+               >
+               <button
+                   pButton
+                   pRipple
+                   label="Login Page"
+                   icon="pi pi-success"
+                   class="p-button-success mr-2"
+                   (click)="closeAndValidateUser()"
+                 ></button>
+               </p-dialog>

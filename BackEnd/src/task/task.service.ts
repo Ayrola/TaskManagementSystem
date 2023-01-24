@@ -18,7 +18,8 @@ export class TaskService {
   getAllTasks(user: User) : Promise<Task[]> {
     try {
       return this.taskRepository.find({relations: {
-        user: true
+        user: true,
+        project: true
       },
     where: {user}});
     } catch (error) {
@@ -53,23 +54,6 @@ export class TaskService {
       throw new InternalServerErrorException();
     }
     
-  }
-
-  async assignTaskToProject(projectId: string, taskId: string, user: User) : Promise<Task>
-  {
-      let createdTask = await this.taskRepository.findOne({
-      where: { id: taskId },
-    });
-
-    createdTask.project.id = projectId;
-
-    if(!createdTask)
-    {
-      this.logger.error(`${user.username} try to get task by id: ${taskId}`);
-      throw new NotFoundException(`Task with ID: "${taskId}" not found`);
-    }
-      
-    return createdTask;
   }
 
   async getTaskById(id: string, user: User) : Promise<Task>

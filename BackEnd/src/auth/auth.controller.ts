@@ -20,7 +20,7 @@ export class AuthController {
     }
 
     @Post('/signUp')
-    async signUp(@Body()userDto: UserDto) : Promise<{accessToken: string, username: string}>{
+    async signUp(@Body()userDto: UserDto) : Promise<{email: string, username: string, isActive: boolean}>{
         return await this.authService.createUser(userDto);
     }
 
@@ -28,6 +28,12 @@ export class AuthController {
     async signIn(@Body('username')username: string, @Body('password')password: string,) : Promise<{accessToken: string}>{
         await this.delay(1000);
         return await this.authService.singIn(username, password);
+    }
+
+    @Post('/activateUser')
+    async activateUser(@Body('username')username: string){
+        await this.delay(1000);
+        await this.authService.activateUser(username);
     }
 
     delay(ms: number) {

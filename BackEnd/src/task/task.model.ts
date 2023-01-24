@@ -7,7 +7,7 @@ export interface Task{
     description: string;
     status: TaskStatus;
     user: User;
-    project: Project 
+    project: Project[]
 }
 
 export enum TaskStatus{

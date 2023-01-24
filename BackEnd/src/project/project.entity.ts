@@ -1,4 +1,5 @@
 import { Exclude } from "class-transformer";
+import { ARRAY_CONTAINS } from "class-validator";
 import { userInfo } from "os";
 import { User } from "src/auth/user.entity";
 import { Task } from "src/task/task.entity";
@@ -19,13 +20,11 @@ export class Project{
     @Column()
     status: ProjectStatus; 
 
-    @OneToOne(type => User, user => user.tasks, {eager: false})
-    projectOwner: User;
-
     @ManyToMany(type => User, user => user.projects, {cascade: ["insert", "update"]})
     @JoinTable()
     users: User[];
 
-    @OneToMany(type => Task, task => task.user, {eager: true})    
+    @ManyToMany(type => Task, task => task.project, {cascade: ["insert", "update"]})
+    @JoinTable()
     tasks: Task[];
 }

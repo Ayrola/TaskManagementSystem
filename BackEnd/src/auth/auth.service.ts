@@ -1,5 +1,5 @@
 import { ConflictException, Inject, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Repository, TreeRepository } from 'typeorm';
 import { UserDto } from './Dtos/database.user.dto';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
@@ -17,7 +17,7 @@ export class AuthService {
         private jwtService: JwtService,
       ) {}
 
-async createUser(userDto: UserDto) : Promise<{accessToken: string, email: string, username: string}>{
+async createUser(userDto: UserDto) : Promise<{email : string, username: string, isActive: boolean}>{
     const {email, username, password} = userDto;
 
     const salt = await bcrypt.genSalt();
@@ -28,7 +28,7 @@ async createUser(userDto: UserDto) : Promise<{accessToken: string, email: string
         username,
         password: hashedPasword,
     });
-    
+    this.sendMailWhenSignIn(user);
     await this.userRepository.save(user).catch(e =>{
         if(e.code = '23505')
         {
@@ -41,18 +41,27 @@ async createUser(userDto: UserDto) : Promise<{accessToken: string, email: string
             throw new InternalServerErrorException();
         }
     });
-    return this.singIn(userDto.username, userDto.password);
+    return { email, username, isActive: false };
     }
 
-async singIn(username: string, password: string) : Promise<{accessToken: string, email:string, username: string}>{
+async singIn(username: string, password: string) : Promise<{accessToken: string, email:string, username: string, isActive: boolean}>{
 
     const foundUser =  await this.userRepository.findOne({where: {username: username}});
     if(foundUser && (await bcrypt.compare(password, foundUser.password)))
     {
+      if(foundUser.active ==true)
+      {
         const email = foundUser.email;
+        const isActive = true;
         const payload: JwtPayload = {username};
         const accessToken: string = await this.jwtService.sign(payload);
-        return { accessToken, email, username};
+        return { accessToken, email, username, isActive };
+      }
+      else
+      {
+        this.logger.error(`${username} try to sign in.Account not varified`);
+        throw new UnauthorizedException('Please verify your account!');
+    }
     }
     else
     {
@@ -79,5 +88,51 @@ async getAllUsers() : Promise<UserDto[]> {
       this.logger.error(`Cannot delete user`, error.stack)
       throw new InternalServerErrorException();
     }
+  }
+
+  async activateUser(username: string) : Promise<void> {
+    try {
+        const foundUser =  await this.userRepository.findOne({where: {username: username}});
+        console.log(foundUser)
+        foundUser.active = true;
+        this.userRepository.save(foundUser);
+    } catch (error) {
+      this.logger.error(`User was not activated successfully`, error.stack)
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async sendMailWhenSignIn(user: User)
+  {
+    const nodemailer = require("nodemailer");
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      host: 'smtp.gmail.com',
+      secure: false,
+      auth: {
+        user: 'testingnodemailer99@gmail.com',
+        pass: 'ilmvhfwobwxbtmyq'
+      }
+    });
+
+    try{
+      let info = await transporter.sendMail({
+        from: 'testingnodemailer99@gmail.com',
+        to: user.email,
+        subject: 'test',
+        html: `<h1>Email Confirmation</h1>
+        <h2>Hello ${user.username}</h2>
+        <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
+        <a href=http://localhost:4200/userVerification/${user.username}> Click here</a>
+        </div>`,
+      });
+
+      console.log(info.messageId);
+      console.log('testing mail');
+    }catch(err)
+    {
+      console.log(err);
+    }
+
   }
 }

@@ -14,14 +14,21 @@ import { ButtonModule } from 'primeng/button';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { TaskModule } from './tasks/task.module';
 import { UsersModule } from './users-list/users-module';
+import { LoginComponent } from './authentication/login/login.component';
+import { NotvalidUserComponent } from './authentication/notvalid-user/notvalid-user.component';
+import { UserVerificationComponent } from './authentication/user-verification/user-verification.component';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: 
   [
     AppComponent,
     SignInComponent,
-    MenuComponent, 
+    NotvalidUserComponent,
+    MenuComponent,
+    LoginComponent,
     LoadingSpinnerComponent,
+    UserVerificationComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +41,8 @@ import { UsersModule } from './users-list/users-module';
     PasswordModule,
     ReactiveFormsModule,
     FormsModule,
-    ButtonModule
+    ButtonModule,
+    DialogModule
   ],
   providers: [],
   bootstrap: [AppComponent],

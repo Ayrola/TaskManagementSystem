@@ -101,16 +101,24 @@ export class ProjectService {
 
   async putTaskIntoProject(projectId: string, user: User, taskId: string) : Promise<Project> {
     let foundProject = await this.getProjectById(projectId, user);
+    console.log('before work with tasks');
     let task = await this.taskRepository.findOne({
       where: { id: taskId },
     });
+    console.log(task);
+    console.log('after task printing');
 
     if(foundProject){
       if(this.checkIfTaskExistsInProject(foundProject, user.id, task.id) == false)
       {
-        foundProject.tasks.push(task);
+        if(foundProject.tasks == null)
+        {
+          foundProject.tasks = new Array<Task>();
+        }
+        foundProject.tasks.push(task);  
       }
     }
+    console.log('after pushing the task')
 
     return await this.projectRepository.save(foundProject);
   }
@@ -166,12 +174,16 @@ export class ProjectService {
   checkIfTaskExistsInProject(project: Project, userId: string, taskId: string): boolean{
     let isTaskexisting: boolean = false;
 
-    project.tasks.forEach(task => {
-      if(task.id == taskId)
-      {
-        isTaskexisting = true;
-      }
-    });
+    if(project.tasks)
+    {
+      project.tasks.forEach(task => {
+        if(task.id == taskId)
+        {
+          isTaskexisting = true;
+        }
+      });
+    }
+    
     return isTaskexisting;
   }
 }

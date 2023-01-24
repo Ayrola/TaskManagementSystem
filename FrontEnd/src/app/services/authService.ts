@@ -22,7 +22,7 @@ export class AuthService{
                 password: password,
             }
         ).pipe(catchError(this.errorService.handleError), 
-        tap(resData => {this.handleAuthentication(resData.accessToken, resData.email, resData.username)}));
+        tap(resData => {this.handleAuthentication(resData.accessToken, resData.email, resData.isActive, resData.username)}));
     }
 
     signUp(userName: string, password: string, email: string)
@@ -34,16 +34,35 @@ export class AuthService{
                 password: password,
                 email: email,
             }
-        ).pipe(catchError(this.errorService.handleError),
-         tap(resData => {this.handleAuthentication(resData.accessToken, resData.email, resData.username)}));
+        ).pipe(catchError(this.errorService.handleError));
     }
 
-    private handleAuthentication(accessToken: string, email: string, username: string)
+    activateUser(userName: string)
     {
-        const expirationTokenMiliseconds = JSON.parse(window.atob(accessToken.split('.')[1])).exp;
-        const expirationDate = new Date(expirationTokenMiliseconds*1000);
-        const user = new User(email, username, accessToken, expirationDate);
+        console.log(userName);
+        this.httpClient.post<UserAuthResponseData>(
+            'http://localhost:3000/auth/activateUser',
+            {
+                username: userName,
+            }
+        ).subscribe();
+        console.log(userName);
+    }
 
-        this.user.next(user);
+    private async handleAuthentication(accessToken: string, email: string, isActive: boolean, username: string)
+    {
+        console.log(isActive);
+        if(isActive)
+        {
+            const expirationTokenMiliseconds = JSON.parse(window.atob(accessToken.split('.')[1])).exp;
+            const expirationDate = new Date(expirationTokenMiliseconds*1000);
+            const user = new User(email, username, isActive, accessToken, expirationDate);
+
+            this.user.next(user);
+        }
+    }
+
+    delay(ms: number) {
+        return new Promise( resolve => setTimeout(resolve, ms) );
     }
 }
