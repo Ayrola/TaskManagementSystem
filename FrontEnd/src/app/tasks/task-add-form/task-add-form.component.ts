@@ -3,30 +3,36 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TaskService } from 'src/app/services/task-service';
 
+interface TaskStatus {
+  name: string
+}
 @Component({
   selector: 'app-task-add-form',
   templateUrl: './task-add-form.component.html',
   styleUrls: ['./task-add-form.component.scss']
 })
 export class TaskAddFormComponent implements OnInit {
-
+taskStatuses: TaskStatus[];
+selectedStatus: TaskStatus;
+description: string;
+title: string;
   constructor(
     private taskService: TaskService,
-    private router: Router,) { }
+    private router: Router) {
+      this.taskStatuses = [
+        {name: 'OPEN',},
+        {name: 'IN_PROGRESS',},
+        {name: 'DONE',},
+        {name: 'BLOCKED'}
+    ];
+     }
 
   ngOnInit(): void {
   }
 
-  async onSubmit(form: NgForm)
+  async createTask()
   {
-    if(!form.valid)
-    {
-      return;
-    }
-    const title = form.value.title;
-    const description = form.value.description;
-
-    this.taskService.createTask(title, description).subscribe(
+    this.taskService.createTask(this.title, this.description).subscribe(
         {
           next: (resData) =>
           {
@@ -37,7 +43,7 @@ export class TaskAddFormComponent implements OnInit {
             console.log(resData);
           }
         });
-
-        form.reset();
+        this.title = '';
+        this.description = '';
     }
 }

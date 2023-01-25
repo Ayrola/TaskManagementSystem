@@ -2,18 +2,31 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/services/task-service';
 import { TasksModel } from '../tasksResponseData';
 
+interface TaskStatus {
+  name: string
+}
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss']
 })
 export class TaskListComponent implements OnInit {
-
   public tasks: TasksModel[];
-  // public heroDialog: boolean = false;
-  // public hero : Hero = {} as Hero;
+  taskDialog: boolean = false;
+  taskTitle: string;
+  taskStatus: string;
+  taskDescription: string;
+  taskStatuses: TaskStatus[];
+  selectedStatus: TaskStatus;
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService) { 
+    this.taskStatuses = [
+      {name: 'OPEN',},
+      {name: 'IN_PROGRESS',},
+      {name: 'DONE',},
+      {name: 'BLOCKED'}
+  ];
+  }
 
   ngOnInit(): void {
     this.loadTasks();
@@ -42,5 +55,27 @@ export class TaskListComponent implements OnInit {
         console.log(error);
       }
     })
+  }
+
+  blockTask(id: string){
+    this.taskService.blockTask(id).subscribe({
+      next: ()=> 
+      {
+        this.loadTasks();
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
+  }
+
+  showEditDialog()
+  {
+    this.taskDialog = true;
+  }
+
+  closeDialogAndSave()
+  {
+    this.taskDialog = false;
   }
 }

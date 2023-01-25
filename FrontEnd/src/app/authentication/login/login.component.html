@@ -1,6 +1,8 @@
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<div class="alert alert-danger d-inline-flex p-2 centered" role="alert" *ngIf="error">
+    <p>{{error}}</p>
+</div>
 <div class="container">
         <div class="login-container">
             <input id="item-1" type="radio" name="item" class="sign-in" checked><label for="item-1" class="item">Sign In</label>
@@ -8,14 +10,14 @@
             <div class="login-form">
                 <div class="sign-in-htm">
                     <div class="group">
-                        <input placeholder="Username" id="user" type="text" class="input">
+                        <input placeholder="Username" id="user" type="text" class="input" [(ngModel)]="username">
                     </div>
                     <div class="group">
-                        <input placeholder="Password" id="pass" type="password" class="input" data-type="password">
+                        <input placeholder="Password" id="pass" type="password" class="input" data-type="password"[(ngModel)]="password">
                     </div>
 
                     <div class="group">
-                        <input type="submit" class="button" value="Sign In">
+                        <input type="submit" class="button" value="Sign In" (click)="signIn()">
                     </div>
                     <div class="hr"></div>
                     <div class="footer">
@@ -24,22 +26,22 @@
                 </div>
                 <div class="sign-up-htm">
                     <div class="group">
-                        <input placeholder="Username" id="user" type="text" class="input">
+                        <input placeholder="Username" id="user" type="text" class="input"[(ngModel)]="username">
                     </div>
 
                     <div class="group">
-                        <input placeholder="Email adress" id="pass" type="text" class="input">
+                        <input placeholder="Email adress" id="pass" type="text" class="input"[(ngModel)]="email">
                     </div>
 
                     <div class="group">
-                        <input placeholder="Password" id="pass" type="password" class="input" data-type="password">
+                        <input placeholder="Password" id="pass" type="password" class="input" data-type="password"[(ngModel)]="password">
                     </div>
                     <div class="group">
-                        <input placeholder="Repeat password" id="pass" type="password" class="input" data-type="password">
+                        <input placeholder="Repeat password" id="pass" type="password" class="input" data-type="password"[(ngModel)]="password">
                     </div>
 
                     <div class="group">
-                        <input type="submit" class="button" value="Sign Up">
+                        <input type="submit" class="button" value="Sign Up" (click)="signUp()">
                     </div>
                     <div class="hr"></div>
                     <div class="footer">

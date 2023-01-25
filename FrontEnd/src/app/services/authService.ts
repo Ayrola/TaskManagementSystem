@@ -1,10 +1,9 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, catchError, Subject, tap, throwError } from "rxjs";
+import { BehaviorSubject, catchError, tap } from "rxjs";
 import { ErrorService } from "./error-service";
 import { UserAuthResponseData } from "../authentication/userAuthResponseData";
 import { User } from "../authentication/user.module";
-import { registerLocaleData } from "@angular/common";
 
 @Injectable({providedIn: 'root'})
 export class AuthService{

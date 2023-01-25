@@ -12,6 +12,9 @@ import { ErrorService } from 'src/app/services/error-service';
 export class LoginComponent implements OnInit {
   isSignedUp = true;
   isLoading = false;
+  username: string;
+  password: string;
+  email: string;
   error:string = null;
   constructor(
       private authService: AuthService,
@@ -21,33 +24,29 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  switchBetweenLoginAndSignUp()
+  async signIn()
   {
-    this.isSignedUp = !this.isSignedUp;
-  }
-
-  async onSubmit(form: NgForm)
-  {
-    if(!form.valid)
-    {
-      return;
-    }
-    const username = form.value.username;
-    const password = form.value.password;
+    this.error = null;
     this.isLoading = true;
 
     if(this.isSignedUp)
     {
-      this.authService.signIn(username, password).subscribe(
+      this.authService.signIn(this.username, this.password).subscribe(
         {
           next: (resData) =>
           {
             localStorage.setItem('token', resData.accessToken);
             const expiration = JSON.parse(window.atob(resData.accessToken.split('.')[1])).exp;
 
-            console.log(new Date(expiration*1000));
             this.isLoading = false;
-            this.router.navigate(['/tasks'])
+            if(resData.isActive == true)
+            {
+              this.router.navigate(['/tasks'])
+            }
+            else{
+              this.router.navigate(['/notActivatedUser'])
+            }
+            
           },
           error: (resData)=>
           {
@@ -56,14 +55,27 @@ export class LoginComponent implements OnInit {
           }
         });
     }
-    else{
-      const email = form.value.email;
-      this.authService.signUp(username, password, email).subscribe(
+    this.username = '';
+    this.password = '';
+    this.email = '';
+  }
+
+    signUp(){
+      this.error = null;
+      this.isLoading = true;
+
+      this.authService.signUp(this.username, this.password, this.email).subscribe(
         {
           next: (resData) =>
           {
-            localStorage.setItem('token', resData.accessToken);
-            this.router.navigate(['/tasks'])
+            console.log(resData);
+            if(resData.isActive == true)
+            {
+              this.router.navigate(['/tasks'])
+            }
+            else{
+              this.router.navigate(['/notActivatedUser'])
+            }
             this.isLoading = false;
           },
           error: (resData)=>
@@ -72,8 +84,8 @@ export class LoginComponent implements OnInit {
             this.isLoading = false;
           }
         });
+    this.username = '';
+    this.password = '';
+    this.email = '';
     }
-    form.reset();
-  }
-
 }

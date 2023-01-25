@@ -9,6 +9,7 @@ import { TaskService } from '../services/task-service';
 import { TaskEditFormComponent } from './task-edit-form/task-edit-form.component';
 import { TaskAddFormComponent } from './task-add-form/task-add-form.component';
 import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinner.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [TaskListComponent, TaskEditFormComponent, TaskAddFormComponent],
@@ -18,6 +19,7 @@ import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinn
     ButtonModule,
     DialogModule,
     InputTextModule,
+    DropdownModule,
   ],
   providers: [TaskService],
   bootstrap: [],

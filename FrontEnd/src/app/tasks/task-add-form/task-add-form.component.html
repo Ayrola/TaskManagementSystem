@@ -1,31 +1,24 @@
-<div *ngIf="isLoading" class="centered">
-</div>
 <div class="row centered">
-    <div class="col-md-12">
-        <form #addTask="ngForm" (ngSubmit)="onSubmit(addTask)" class="justify-content-center align-items-center" >    
+    <div class="col-md-12">  
             <div class="field">
                 <h5>Task Title</h5>
                 <input pinputtext=""
-                 class="p-inputtext p-component p-element ng-pristine ng-valid ng-touched"
-                 ngModel name="title" required>
+                 class="p-inputtext p-component p-element ng-pristine ng-valid ng-touched" [(ngModel)]="title">
             </div>   
             <div class="field">
                 <h5>Task Description</h5>
                 <input pinputtext=""
-                 class="p-inputtext p-component p-element ng-pristine ng-valid ng-touched"
-                 ngModel name="description" required>
+                 class="p-inputtext p-component p-element ng-pristine ng-valid ng-touched" [(ngModel)]="description">
             </div>
             <div>
                 <h5>Task Status</h5>
-                <input pinputtext="" class="p-inputtext p-component p-element ng-tns-c138-36"
-                ngModel name="status">
+                <p-dropdown [options]="taskStatuses" [(ngModel)]="selectedStatus" optionLabel="name" [readonly]="true"></p-dropdown>
             </div>
             <div>
-                <button label="Log In"
-                 class="p-element p-ripple p-button-success p-button p-component button-with-margins" type="submit" [disabled]="!addTask.valid">
+                <button label="Create"
+                 class="p-element p-ripple p-button-success p-button p-component button-with-margins" type="submit"(click)="createTask()">
                  <span class="p-button-label">Create</span>
                  <span class="p-ink" style="height: 455px; width: 455px; top: -216px; left: 16.5px;"></span></button>
             </div>
-        </form>
     </div>
 </div>

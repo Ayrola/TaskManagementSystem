@@ -47,12 +47,59 @@
       <td style="text-align: center;">{{ task.description }}</td>
       <td style="text-align: center;">{{ task.status }}</td>
       <td class="flex justify-content-center align-items-center">
+        <p-dialog
+  [(visible)]="taskDialog"
+  [style]="{ width: '450px' }"
+  header="Edit Task"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+<ng-template pTemplate="content">
+  <div class="field">
+    <label for="name">Name</label>
+    <input
+      type="text"
+      pInputText
+      id="name"
+      [(ngModel)]="taskTitle"
+      required
+      autofocus
+      [placeholder]="task.title"
+    />
+  </div>
+  <div class="field">
+    <label for="name">Description</label>
+    <input
+      type="text"
+      pInputText
+      id="name"
+      [(ngModel)]="taskDescription"
+      required
+      autofocus
+      [placeholder]="task.description"
+    />
+  </div>
+  <div class="field">
+    <label for="name">Description</label>
+    <p-dropdown [options]="taskStatuses" [(ngModel)]="task.status" optionLabel="name" [readonly]="true"></p-dropdown>
+  </div>
+<button
+    pButton
+    pRipple
+    label="Create"
+    icon="pi pi-plus"
+    class="p-button-success mr-2"
+    (click)="closeDialogAndSave()"
+  ></button>
+</ng-template>
+</p-dialog>
         <button
           class="button-warning"
           pButton
           type="button"
           icon="pi pi-user-edit"
           iconPos="left"
+          (click)="showEditDialog()"
         ></button>
         <button
           class="button-danger"
@@ -68,6 +115,7 @@
           type="button"
           icon="pi pi-ban"
           iconPos="left"
+          (click)="blockTask(task.id)"
         ></button>
       </td>
     </tr>

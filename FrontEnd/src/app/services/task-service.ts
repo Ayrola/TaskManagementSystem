@@ -32,11 +32,29 @@ export class TaskService {
         accessToken = user.token;
       })
 
-    console.log(accessToken);
+    console.log(title);
+    console.log(description);
     return this.http.post<TasksModel>(`${environment.backendUrl}/task`,
       {
         title: title,
         description: description
+      },
+      {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+        }
+      });
+  }
+
+  blockTask(taskId: string) {
+    let accessToken: string;
+    this.authService.user.pipe(
+      take(1)).subscribe(user =>{
+        accessToken = user.token;
+      });
+    return this.http.patch<TasksModel>(`${environment.backendUrl}/task/${taskId}/status`,
+      {
+        status: 'BLOCKED',
       },
       {
           headers: {
