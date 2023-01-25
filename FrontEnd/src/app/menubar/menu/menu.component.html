@@ -9,6 +9,7 @@
   <ul>
     <li><a routerLink="/tasks/add" *ngIf="isAuthenticated">Add Task</a></li>
     <li><a routerLink="/tasks"*ngIf="isAuthenticated">Dashboard</a></li>
+    <li><a routerLink="/projects"*ngIf="isAuthenticated">Projects</a></li>
     <li><a routerLink="/users" *ngIf="isAuthenticated">Users</a></li>
     <li><a routerLink="/login" *ngIf="!isAuthenticated">LoginV2</a></li>
     <li><a routerLink="/signIn" *ngIf="!isAuthenticated">Login</a></li>

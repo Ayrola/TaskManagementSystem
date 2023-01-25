@@ -78,6 +78,33 @@ export class ProjectService {
     }
   }
 
+  async getAllTasksByProject(user: User, projectTitle: string) : Promise<Task[]> {
+    try {
+      let projects = await this.projectRepository.find({
+        relations: {
+          users: true,
+        },
+      });
+
+      let foundProjects: Project[] = [];
+      await(projects).forEach(project => {
+        if(this.checkIfUserIsAssignedToProject(project, user.id) == true)
+        {
+          if(project.title==projectTitle)
+          {
+            return project.tasks;
+          }
+          foundProjects.push(project);
+        }
+      });
+
+      return null;
+    } catch (error) {
+      this.logger.error(`${user.username} tryies to get all projects.`, error.stack)
+      throw new InternalServerErrorException();
+    }
+  }
+
   async assignUserToProject(projectId: string, user: User) : Promise<Project> {
     let foundProject = await this.getProjectById(projectId, user);
 

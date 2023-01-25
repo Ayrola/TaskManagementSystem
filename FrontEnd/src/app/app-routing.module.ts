@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ForgetpasswordComponent } from './authentication/forgetpassword/forgetpassword.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { NotvalidUserComponent } from './authentication/notvalid-user/notvalid-user.component';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { UserVerificationComponent } from './authentication/user-verification/user-verification.component';
 import { HeroListComponent } from './hero/hero-list/hero-list.component';
+import { ProjectListComponent } from './projects/project-list/project-list.component';
 import { TaskAddFormComponent } from './tasks/task-add-form/task-add-form.component';
 import { TaskListComponent } from './tasks/task-list/task-list.component';
 import { UsersListComponent } from './users-list/users-list/users-list.component';
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: 'tasks/add', component: TaskAddFormComponent },
   { path: 'notActivatedUser', component: NotvalidUserComponent },
   { path: 'userVerification/:username', component: UserVerificationComponent },
+  { path: 'forgotPassword/:username', component: ForgetpasswordComponent },
+  { path: 'projects', component: ProjectListComponent },
 ];
 
 @NgModule({

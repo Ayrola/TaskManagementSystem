@@ -91,6 +91,16 @@ export class TaskService {
     return task;
   }
 
+  async updateStatusInfo(id: string, title: string, description: string, user: User): Promise<Task>
+  {
+    const task = await this.getTaskById(id, user);
+    task.title = title;
+    task.description = description;
+    this.taskRepository.save(task);
+
+    return task;
+  }
+
   async getTasksFiltered(tasksFilterDto: GetTaskFilterDto, user: User): Promise<Task[]>
   {
     //TODO (Ayrola 24/11/2022) use queryBuilder.

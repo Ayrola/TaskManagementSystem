@@ -51,4 +51,10 @@ export class TaskController {
     const {status} = updateTaskStatusDto;
     return this.taskService.updateTaskStatusById(id, status, user);
   }
+
+  @Patch('/:id/update')
+  updatetaskInfoById(@Param('id') id: string, @Body('title')title: string, @Body('description')description: string, @GetUser() user: User): Promise<Task>
+  {
+    return this.taskService.updateStatusInfo(id, title, description, user);
+  }
 }

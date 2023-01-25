@@ -46,6 +46,28 @@ export class TaskService {
       });
   }
 
+  updateTask(title: string, description: string, taskId: string) {
+    let accessToken: string;
+    this.authService.user.pipe(
+      take(1)).subscribe(user =>{
+        accessToken = user.token;
+      })
+
+    console.log(title);
+    console.log(description);
+    console.log(taskId)
+    return this.http.patch<TasksModel>(`${environment.backendUrl}/task/${taskId}/update`,
+      {
+        title: title,
+        description: description
+      },
+      {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+        }
+      });
+  }
+
   blockTask(taskId: string) {
     let accessToken: string;
     this.authService.user.pipe(

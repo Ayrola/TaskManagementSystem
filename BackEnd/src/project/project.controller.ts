@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } f
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from 'src/auth/user.entity';
+import { Task } from 'src/task/task.model';
 import { CreateProjectDto } from './Dtos/create-project.dto';
 import { Project } from './project.model';
 import { ProjectService } from './project.service';
@@ -40,5 +41,11 @@ export class ProjectController {
   putTaskIntoProject(@Param('id') id: string, @Param('taskId') taskId: string, @GetUser() user: User): Promise<Project>
   {
     return this.projectService.putTaskIntoProject(id, user, taskId);
+  }
+
+  @Get('/getTasks')
+  getAllTasksByProjectName(@Body('projectTitle')projectTitle: string, @GetUser() user: User): Promise<Task[]>
+  {
+    return this.projectService.getAllTasksByProject(user, projectTitle);
   }
 }

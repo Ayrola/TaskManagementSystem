@@ -18,12 +18,16 @@ import { LoginComponent } from './authentication/login/login.component';
 import { NotvalidUserComponent } from './authentication/notvalid-user/notvalid-user.component';
 import { UserVerificationComponent } from './authentication/user-verification/user-verification.component';
 import { DialogModule } from 'primeng/dialog';
+import { ProjectListComponent } from './projects/project-list/project-list.component';
+import { ProjectModule } from './projects/project.module';
+import { ForgetpasswordComponent } from './authentication/forgetpassword/forgetpassword.component';
 
 @NgModule({
   declarations: 
   [
     AppComponent,
     SignInComponent,
+    ForgetpasswordComponent,
     NotvalidUserComponent,
     MenuComponent,
     LoginComponent,
@@ -36,6 +40,7 @@ import { DialogModule } from 'primeng/dialog';
     HttpClientModule,
     HeroModule,
     TaskModule,
+    ProjectModule,
     UsersModule,
     AppRoutingModule,
     PasswordModule,

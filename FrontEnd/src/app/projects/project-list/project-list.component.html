@@ -1,0 +1,62 @@
+<h2 class="centered-text-table-heading">Projects List</h2>
+<div class="table-container">
+<p-table [value]="projects" styleClass="p-datatable-gridlines .ui-state-highlight" [tableStyle]="{'min-width': '50rem'}"
+[scrollable]="true" scrollHeight="500px">
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="min-width: 15rem">
+        <div class="flex justify-content-center align-items-center">
+          Title
+          <p-columnFilter
+            type="text"
+            field="title"
+            display="menu"
+          ></p-columnFilter>
+        </div>
+      </th>
+      <th style="min-width: 15rem">
+        <div class="flex justify-content-center align-items-center">
+          Description
+          <p-columnFilter
+            type="text"
+            field="description"
+            display="menu"
+          ></p-columnFilter>
+        </div>
+      </th>
+      <th style="min-width: 15rem">
+        <div class="flex justify-content-center align-items-center">
+          Status
+          <p-columnFilter
+            type="text"
+            field="stauts"
+            display="menu"
+          ></p-columnFilter>
+        </div>
+      </th>
+      <th style="min-width: 15rem">
+        <div class="flex justify-content-center align-items-center">
+          Actions
+        </div>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-project>
+    <tr>
+      <td style="text-align: center;">{{ project.title }}</td>
+      <td style="text-align: center;">{{ project.description }}</td>
+      <td style="text-align: center;">{{ project.status }}</td>
+      <td class="flex justify-content-center align-items-center">
+        <button
+          class="button-warning"
+          pButton
+          type="button"
+          icon="pi pi-user-edit"
+          iconPos="left"
+          (click)="showEditDialog()"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+</div>

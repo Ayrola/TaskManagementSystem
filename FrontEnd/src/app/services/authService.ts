@@ -48,6 +48,20 @@ export class AuthService{
         console.log(userName);
     }
 
+    changePassword(userName: string, newPassword: string)
+    {
+        console.log(userName);
+        this.httpClient.post<UserAuthResponseData>(
+            'http://localhost:3000/auth/changePassword',
+            {
+                username: userName,
+                password: newPassword
+            }
+        ).subscribe();
+        console.log(userName);
+        console.log(newPassword);
+    }
+
     private async handleAuthentication(accessToken: string, email: string, isActive: boolean, username: string)
     {
         console.log(isActive);

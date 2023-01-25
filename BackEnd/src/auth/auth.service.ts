@@ -102,6 +102,20 @@ async getAllUsers() : Promise<UserDto[]> {
     }
   }
 
+  async changePassword(username: string, password: string) : Promise<void> {
+    try {
+        const salt = await bcrypt.genSalt();
+        const hashedPasword = await bcrypt.hash(password, salt);
+        const foundUser =  await this.userRepository.findOne({where: {username: username}});
+        console.log(foundUser)
+        foundUser.password = hashedPasword;
+        this.userRepository.save(foundUser);
+    } catch (error) {
+      this.logger.error(`Password changed`, error.stack)
+      throw new InternalServerErrorException();
+    }
+  }
+
   async sendMailWhenSignIn(user: User)
   {
     const nodemailer = require("nodemailer");

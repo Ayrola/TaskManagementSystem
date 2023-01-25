@@ -36,6 +36,12 @@ export class AuthController {
         await this.authService.activateUser(username);
     }
 
+    @Post('/changePassword')
+    async changePassword(@Body('username')username: string, @Body('password')password: string){
+        await this.delay(1000);
+        await this.authService.changePassword(username, password);
+    }
+
     delay(ms: number) {
         return new Promise( resolve => setTimeout(resolve, ms) );
     }
